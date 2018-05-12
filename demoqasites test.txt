@@ -1,0 +1,134 @@
+package Launchchrome;
+
+import java.io.File;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+public class demoqasites {
+
+	public static WebDriver driver;
+
+	public static void main(String[] args) {
+		try {
+
+			System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
+			driver = new ChromeDriver();
+			demoqasites.captureScreenShot(driver);
+			String baseurl = "http://toolsqa.com/automation-practice-form/";
+			driver.get(baseurl);
+			demoqasites.captureScreenShot(driver);
+			driver.manage().window().maximize();
+			demoqasites.captureScreenShot(driver);
+			driver.manage().timeouts().implicitlyWait(1000, TimeUnit.SECONDS);
+			WebElement information1 = driver.findElement(By.xpath("//*[@id='content']/div[1]/div/div/div/div[1]/p[2]/span/em"));
+			String messageinfo = information1.getText();
+			demoqasites.captureScreenShot(driver);
+			System.out.println("Actual msg: " +messageinfo);
+			WebElement partiallink = driver.findElement(By.xpath("//*[@id='content']/div[1]/div/div/div/div[2]/div/form/fieldset/div[2]/a/strong"));
+			demoqasites.captureScreenShot(driver);
+			partiallink.click();
+			demoqasites.captureScreenShot(driver);
+			System.out.println("Partial link option is clicked");
+			/*WebElement linktest = driver.findElement(By.xpath("//*[@id='content']/div[1]/div/div/div/div[2]/div/form/fieldset/div[5]/a/strong"));
+			linktest.click();
+			System.out.println("Link table is clicked");
+			driver.navigate().to(baseurl);
+			driver.manage().timeouts().implicitlyWait(1000, TimeUnit.SECONDS);*/
+			WebElement firstname = driver.findElement(By.xpath("//*[@id='content']/div[1]/div/div/div/div[2]/div/form/fieldset/div[8]/input"));
+			demoqasites.captureScreenShot(driver);
+			firstname.sendKeys("Firstnametext");
+			demoqasites.captureScreenShot(driver);
+			System.out.println("Firstname= Firstnametext");
+			WebElement lastname = driver.findElement(By.xpath("//*[@id='content']/div[1]/div/div/div/div[2]/div/form/fieldset/div[11]/input"));
+			demoqasites.captureScreenShot(driver);
+			lastname.sendKeys("Lastnametest");
+			demoqasites.captureScreenShot(driver);
+			System.out.println("Lastname = Lastnametest");
+			/*boolean gender = driver.findElement(By.id("//*[@id='sex-1']")).isSelected();
+			if(gender==true)
+			{
+				System.out.println("Female option is selected "+"\n");
+			}else {
+				System.out.println("Male option is selected" + "\n");
+			}*/
+			WebElement gender = driver.findElement(By.xpath("//*[@id='sex-1']"));
+			demoqasites.captureScreenShot(driver);
+			gender.click();
+			demoqasites.captureScreenShot(driver);
+			if(driver.findElement(By.xpath("//*[@id='sex-1']")).isSelected()) {
+				System.out.println("Female value: True");
+			}else {
+				System.out.println("Female value: False");
+			}
+			WebElement experience = driver.findElement(By.xpath("//*[@id='exp-4']"));
+			demoqasites.captureScreenShot(driver);
+			experience.click();
+			demoqasites.captureScreenShot(driver);
+			if(driver.findElement(By.xpath("//*[@id='exp-4']")).isSelected())
+			{
+				System.out.println("True");
+			}else {
+				System.out.println("False");
+			}
+			WebElement date = driver.findElement(By.xpath("//*[@id='datepicker']"));
+			demoqasites.captureScreenShot(driver);
+			date.sendKeys("5/6/2018");
+			demoqasites.captureScreenShot(driver);
+			WebElement profession = driver.findElement(By.xpath("//*[@id='profession-0']"));
+			demoqasites.captureScreenShot(driver);
+			for(int i=0; i<1; i++) {
+				profession.click();
+				demoqasites.captureScreenShot(driver);
+				System.out.println("Profession = "+profession.isSelected());
+			}
+			/*WebElement Downloadframework = driver.findElement(By.linkText("http://toolsqa.wpengine.com/wp-content/uploads/2014/04/OnlineStore.zip"));
+		Downloadframework.click();*/
+			WebElement Automationtool = driver.findElement(By.xpath("//*[@id='tool-2']"));
+			demoqasites.captureScreenShot(driver);
+			for (int i=0; i<1; i++)
+			{
+				Automationtool.click();
+				demoqasites.captureScreenShot(driver);
+				System.out.println("Automation tool = " +Automationtool.isSelected());
+			}
+			Select Continentsdrop = new Select(driver.findElement(By.xpath("//*[@id='continents']")));
+			demoqasites.captureScreenShot(driver);
+			Continentsdrop.selectByVisibleText("Europe");
+			demoqasites.captureScreenShot(driver);
+			Select seleniumcommands = new Select(driver.findElement(By.xpath("//*[@id='selenium_commands']")));
+			demoqasites.captureScreenShot(driver);
+			seleniumcommands.selectByVisibleText("Switch Commands");
+			demoqasites.captureScreenShot(driver);
+			WebElement submitbutton = driver.findElement(By.xpath("//*[@id='submit']"));
+			demoqasites.captureScreenShot(driver);
+			submitbutton.click();
+			demoqasites.captureScreenShot(driver);
+			driver.close();
+		}	
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public static void captureScreenShot(WebDriver driver){
+		// Take screenshot and store as a file format             
+		File src=((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);           
+		try {
+			// now copy the  screenshot to desired location using copyFile method
+
+			FileUtils.copyFile(src, new File("D:/selenium/"+System.currentTimeMillis()+".png"));                             
+		} 
+		catch (Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+	}
+
+}
